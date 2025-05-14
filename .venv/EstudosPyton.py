@@ -1,3 +1,4 @@
+#Esse foi testado para inserção e avaliação dos OBJETOS no código de receita de bolo.
 class Cake:
     recipe_type = "Bolo básico"
     baking_temperature = 180
@@ -18,7 +19,7 @@ bolo_de_chocolate = Cake("chocolate", "100g", "200ml", 4)
 bolo_de_chocolate.decorate("granulado")
 
 
-
+#Aqui foi inserida a função para observar se o usuário estava na lista, e para imprimir, respectivamente a devida resposta.
 class User():
     is_registered = True
 
