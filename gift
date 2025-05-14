@@ -1,0 +1,11 @@
+alunos ["Pedro", 1, "Arianna", 8, "Miguel", 9]
+def quest_name_number (alunos):
+    if (alunos.count>7)
+    print( Apenas + "alunos.count" tiraram nota maior ou igual a 7)
+    while((Apenas + "alunos count" tiraram abaixo de 7)
+
+    media = soma_notas / len(alunos)
+    print( A média das notas é + "media")
+
+    max (max.alunos)
+    print(O aluno com maior nota é "max.alunos")
