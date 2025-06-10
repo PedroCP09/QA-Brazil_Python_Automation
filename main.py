@@ -75,7 +75,14 @@ class TestUrbanRoutes:
         urban_routes_page.order_ice_creams()
         time.sleep(2)
 
-    #def test_car_search_model_appears(self):
+    def test_car_search_model_appears(self):
+        urban_routes_page = UrbanRoutesPage(self.driver)
+        urban_routes_page.order_car()
+        urban_routes_page.wait_info_popup()
+        name, rating, image = urban_routes_page.get_popup_info()
+        assert name
+        assert rating
+        assert image
 
 
     @classmethod

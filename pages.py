@@ -40,15 +40,20 @@ class UrbanRoutesPage:
     SELECT_ICE_CREAMS = (By.XPATH,'//*[@id="root"]/div/div[3]/div[3]/div[2]/div[2]/div[4]/div[2]/div[3]/div/div[2]/div[1]/div/div[2]/div/div[3]')
     COUNTER_ICE_CREAM_2 = (By.XPATH,'//*[@id="root"]/div/div[3]/div[3]/div[2]/div[2]/div[4]/div[2]/div[3]/div/div[2]/div[1]/div/div[2]/div/div[2]')
     #PEDIR TAXI
-    SELECT_ORDER_TAXI = (By.CLASS_NAME, 'smart-button-wrapper')
-    WINDOW_ORDER = (By.CLASS_NAME, 'order-body')
+    SELECT_ORDER_TAXI = (By.XPATH, '//*[@id="root"]/div/div[3]/div[4]/button')
+    WINDOW_ORDER = (By.CLASS_NAME, '//*[@id="root"]/div/div[5]/div[2]')
+    DRIVER_NAME = (By.XPATH, '//*[@id="root"]/div/div[5]/div[2]/div[2]/div[1]/div[1]/div[2]')
+    DRIVER_TIME = (By.XPATH, '//*[@id="root"]/div/div[5]/div[2]/div[1]/div/div[2]')
+    DRIVER_RATING = (By.XPATH, '//*[@id="root"]/div/div[5]/div[2]/div[2]/div[1]/div[1]/div[1]/div')
+    CANCEL_BUTTON = (By.XPATH, '//*[@id="root"]/div/div[5]/div[2]/div[2]/div[1]/div[2]/button')
+    IMG_DRIVER= (By. XPATH, '//*[@id="root"]/div/div[5]/div[2]/div[2]/div[1]/div[1]/div[1]/img')
 
 
     def __init__(self, driver):
         self.driver = driver
 
     def wait_for_ec(self, locator):
-        WebDriverWait(self.driver, 5).until(EC.presence_of_element_located(locator))
+        WebDriverWait(self.driver, 45).until(EC.presence_of_element_located(locator))
         return self.driver.find_element(*locator)
 
     def set_from_locator(self, from_address):
@@ -81,12 +86,6 @@ class UrbanRoutesPage:
     def taxi_and_comfort_steps(self):
         self.wait_for_ec(self.CALL_TAXI_BUTTON).click()
         self.wait_for_ec(self.COMFORT_CAR_BUTTON).click()
-
-    #element = WebDriverWait(self.driver, 10).until(
-     #       EC.presence_of_element_located(locator)
-     #   )
-     #   classes = element.get_attribute("class").split()
-     #   return "active" in classes
 
     def check_if_tariff_is_active(self):
         return self.wait_for_ec(self.COMFORT_CARD_ACTIVE).text
@@ -140,7 +139,6 @@ class UrbanRoutesPage:
         EC.presence_of_all_elements_located(self.SELECT_BLANKET_HANDKERCHIEFS))
         return switches[0].get_property('checked')
 
-
     def wait_for_ec_all(self, locator):
         return WebDriverWait(self.driver, 5).until(
             EC.presence_of_all_elements_located(locator))
@@ -152,6 +150,22 @@ class UrbanRoutesPage:
 
     def order_car(self):
         self.wait_for_ec(self.SELECT_ORDER_TAXI).click()
+
+    def wait_info_popup(self):
+        WebDriverWait(self.driver, 60).until(
+            EC.invisibility_of_element_located((By.CLASS_NAME, 'overlay'))
+        )
+        pass
+        self.wait_for_ec(self.DRIVER_RATING)
+        self.wait_for_ec(self.IMG_DRIVER)
+        self.wait_for_ec(self.DRIVER_NAME)
+
+    def get_popup_info(self):
+        rating = self.wait_for_ec(self.DRIVER_RATING).text
+        image = self.wait_for_ec(self.IMG_DRIVER).get_property('src')
+        name = self.wait_for_ec(self.DRIVER_NAME).text
+        return name, rating, image
+
 
 
 
