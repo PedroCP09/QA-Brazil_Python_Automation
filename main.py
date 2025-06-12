@@ -6,7 +6,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 import data
 import helpers
-from pages import UrbanRoutesPage
+from page import UrbanRoutesPage
 
 
 class TestUrbanRoutes:
@@ -34,9 +34,7 @@ class TestUrbanRoutes:
     def test_select_plan(self):
         urban_routes_page = UrbanRoutesPage(self.driver)
         urban_routes_page.select_call_taxi()
-        time.sleep(1)
         urban_routes_page.select_comfort_car()
-        time.sleep(3)
         print("Plano retornado:", urban_routes_page.check_if_tariff_is_active())
         assert urban_routes_page.check_if_tariff_is_active() == 'Comfort'
         print("Função criada para definir o plano")
@@ -46,17 +44,15 @@ class TestUrbanRoutes:
         print("Função criada para definir o número de telefone")
         urban_routes_page = UrbanRoutesPage(self.driver)
         urban_routes_page.click_phone_number_camp()
-        time.sleep(1)
         urban_routes_page.insert_phone_number_and_next(data.PHONE_NUMBER)
         urban_routes_page.phone_code_sms()
-
-        #urban_routes_page.phone_code_sms()
+        assert urban_routes_page.get_phone() == data.PHONE_NUMBER
 
     def test_fill_card(self):
         print("Função criada para definir o cartão")
         urban_routes_page = UrbanRoutesPage(self.driver)
         urban_routes_page.add_credit_card()
-        time.sleep(1)
+        assert urban_routes_page.get_payment_method() == 'Cartão'
 
     def test_comment_for_driver(self):
         print("Função criada para definir o motorista")
@@ -73,7 +69,8 @@ class TestUrbanRoutes:
     def test_order_2_ice_creams(self):
         urban_routes_page = UrbanRoutesPage(self.driver)
         urban_routes_page.order_ice_creams()
-        time.sleep(2)
+        assert urban_routes_page.amount_of_ice_creams() == 2
+
 
     def test_car_search_model_appears(self):
         urban_routes_page = UrbanRoutesPage(self.driver)
